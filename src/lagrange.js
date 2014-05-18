@@ -1,11 +1,7 @@
 var gf = require('galois');
 
-module.exports = function(gfW, x, coords) {
+module.exports.galois = function(x, xValues, yValues, gfW) {
   var calcProduct = function(i) {
-    var reducer = function(prev, curr) {
-      return gf.single_multiply(prev, curr, gfW);
-    };
-
     var j;
     var p = [];
 
@@ -27,17 +23,53 @@ module.exports = function(gfW, x, coords) {
 
   var accum = 0;
 
-  var xValues = [];
-  var yValues = [];
-
-  coords.forEach(function(point, idx) {
-    xValues[idx] = point[0];
-    yValues[idx] = point[1];
-  });
-
   yValues.forEach(function(currY, idx) {
     accum = gf.add(accum, gf.single_multiply(calcProduct(idx), currY, gfW));
   });
 
   return accum;
+};
+
+module.exports.base10 = function(x, xValues, yValues) {
+  var calcProduct = function(i) {
+    var j;
+    var p = [];
+
+    for(j = 0; j < xValues.length; j++) {
+      if(j === i) {
+        continue;
+      }
+
+      p.push((x - xValues[j]) / (xValues[i] - xValues[j]));
+    }
+
+    return p.reduce(function(prev, curr) {
+      return prev * curr;
+    }, 1);
+  };
+
+  var accum = 0;
+
+  yValues.forEach(function(currY, idx) {
+    accum += currY * calcProduct(idx);
+  });
+
+  return accum;
+};
+
+/*
+ * Takes an array of coords (tuples), splitting them into an array of x-values
+ * and y-values, which are then returned as a tuple.
+ */
+module.exports.splitCoords = function(coords) {
+  var xValues = [];
+  var yValues = [];
+  var i;
+
+  for(i = 0; i < coords.length; i++) {
+    xValues[i] = coords[i][0];
+    yValues[i] = coords[i][1];
+  };
+
+  return [xValues, yValues];
 };
