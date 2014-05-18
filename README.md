@@ -9,8 +9,6 @@ All finite field arithmetic uses the
 [galois](https://github.com/sbisbee/node-galois) NPM module (`npm show
 galois`).
 
-The interpolation functions expect you to pass in an array of x-values and an array of y-values, so `splitCoords()` is provided
-
 Functions
 ---------
 
