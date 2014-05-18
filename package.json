@@ -1,0 +1,27 @@
+{
+  "name": "lagrange",
+  "version": "0.1.0",
+  "description": "Lagrange polynomial interpolation using finite fields.",
+  "main": "./src/lagrange.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "galois": ">=0.2.0"
+  },
+  "devDependencies": {
+    "vows": "~0.7.0"
+  },
+  "keywords": [
+    "math",
+    "polynomial",
+    "interpolation",
+    "interpolate",
+    "numerical analysis"
+  ],
+  "scripts": {
+    "test": "make check"
+  },
+  "author": "Sam Bisbee <sam@sbisbee.com> (http://sbisbee.com)",
+  "license": "apache"
+}
